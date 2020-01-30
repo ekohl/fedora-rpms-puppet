@@ -31,7 +31,7 @@
 
 Name:           puppet
 Version:        5.5.10
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        A network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            http://puppetlabs.com
@@ -390,6 +390,9 @@ fi
 exit 0
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.10-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Wed Dec 04 2019 Alfrdo Moralejo <amoralej@redhat.com> - 5.5.10-9
 - Add rubygem-multi_json as dependency.
 
