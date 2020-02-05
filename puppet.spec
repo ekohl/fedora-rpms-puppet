@@ -30,8 +30,8 @@
 %endif
 
 Name:           puppet
-Version:        5.5.10
-Release:        10%{?dist}
+Version:        5.5.18
+Release:        1%{?dist}
 Summary:        A network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            http://puppetlabs.com
@@ -45,10 +45,6 @@ Source4:        start-puppet-wrapper
 Patch01:        0001-Fix-puppet-paths.patch
 Patch02:        0002-Revert-maint-Remove-puppetmaster.service.patch
 Patch03:        0003-Remove-Fedora-release-restrictions-from-DNF-provider.patch
-# Note: Puppet 5.5.7 is broken
-# Backporting patches that add supports for RHEL > 7
-# https://github.com/puppetlabs/puppet/pull/7000 (PUP-9069)
-Patch04:        0004-PUP-9069-Add-support-for-RHEL8.patch
 
 BuildArch:      noarch
 BuildRequires:  git
@@ -390,6 +386,9 @@ fi
 exit 0
 
 %changelog
+* Mon Feb 03 2020 Terje Rosten <terje.rosten@ntnu.no> - 5.5.18-1
+- 5.5.18
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.10-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 

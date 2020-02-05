@@ -10,7 +10,7 @@ ones being excluded.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/puppet/provider/package/dnf.rb b/lib/puppet/provider/package/dnf.rb
-index 4823ebf..ee27322 100644
+index 0bf5847..be55568 100644
 --- a/lib/puppet/provider/package/dnf.rb
 +++ b/lib/puppet/provider/package/dnf.rb
 @@ -28,7 +28,7 @@ Puppet::Type.type(:package).provide :dnf, :parent => :yum do
