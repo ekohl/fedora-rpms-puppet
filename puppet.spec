@@ -9,7 +9,7 @@
 %global puppet_libdir   %(ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')
 %endif
 
-%if 0%{?fedora} > 18 || 0%{?rhel} >= 7 || 0%{?suse_version}
+%if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version}
 %global _with_systemd 1
 %endif
 
@@ -23,7 +23,7 @@
 %global pending_upgrade_path %{_localstatedir}/lib/rpm-state/puppet
 %global pending_upgrade_file %{pending_upgrade_path}/upgrade_pending
 
-%if 0%{?fedora} > 30 || 0%{?rhel} > 8
+%if 0%{?fedora} > 30 || 0%{?rhel} >= 8
 %global nm_dispatcher_dir %{_prefix}/lib/NetworkManager
 %else
 %global nm_dispatcher_dir %{_sysconfdir}/NetworkManager
@@ -107,7 +107,7 @@ Requires:       ruby
 %{!?_without_selinux:Requires: ruby(selinux), libselinux-utils}
 
 # Fedora 28 updates to facter3 where puppet needs to require the ruby bindings specifically
-%if 0%{?fedora} >= 28
+%if 0%{?fedora} || 0%{?rhel} >= 8
 BuildRequires:  ruby-facter >= 3.0
 BuildRequires:  ruby-facter < 4
 Requires:       ruby-facter >= 3.0
@@ -215,7 +215,7 @@ sed -i 's|^ExecStart=.*/bin/puppet|ExecStart=/usr/bin/start-puppet-agent|' \
   %{buildroot}%{_unitdir}/puppet.service
 %endif
 
-%if 0%{?fedora} >= 15
+%if 0%{?fedora} || 0%{?rhel} >= 8
 # Setup tmpfiles.d config
 mkdir -p %{buildroot}%{_tmpfilesdir}
 echo "D /run/%{name} 0755 %{name} %{name} -" > \
@@ -234,7 +234,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/%{name}/modules
 %{_initrddir}/puppet
 %config(noreplace) %{_sysconfdir}/sysconfig/puppet
 %endif
-%if 0%{?fedora} >= 15
+%if 0%{?fedora} || 0%{?rhel} >= 8
 %{_tmpfilesdir}/%{name}.conf
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/puppet
