@@ -30,7 +30,7 @@
 %endif
 
 Name:           puppet
-Version:        5.5.18
+Version:        5.5.20
 Release:        1%{?dist}
 Summary:        A network tool for managing many disparate systems
 License:        ASL 2.0
@@ -45,6 +45,10 @@ Source4:        start-puppet-wrapper
 Patch01:        0001-Fix-puppet-paths.patch
 Patch02:        0002-Revert-maint-Remove-puppetmaster.service.patch
 Patch03:        0003-Remove-Fedora-release-restrictions-from-DNF-provider.patch
+# https://tickets.puppetlabs.com/browse/PUP-10247
+Patch04:        puppet-5.5.18-sync.patch
+# https://github.com/puppetlabs/puppet/pull/8060
+Patch05:        puppet-5.5.18-ruby-27.patch
 
 BuildArch:      noarch
 BuildRequires:  git
@@ -386,6 +390,10 @@ fi
 exit 0
 
 %changelog
+* Sat May 02 2020 Terje Rosten <terje.rosten@ntnu.no> - 5.5.20-1
+- 5.5.20
+- Add patches to work (somewhat) with ruby 2.7
+
 * Mon Feb 03 2020 Terje Rosten <terje.rosten@ntnu.no> - 5.5.18-1
 - 5.5.18
 
