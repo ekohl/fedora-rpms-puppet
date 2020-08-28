@@ -39,6 +39,7 @@ Requires: rubygem-puppet-resource_api
 Requires: rubygem-deep_merge
 Requires: rubygem-httpclient
 Requires: rubygem-multi_json
+Requires: rubygem-json
 Requires: ruby-augeas >= 0.5.0
 Requires: augeas >= 1.10.1
 Requires: augeas-libs >= 1.10.1
