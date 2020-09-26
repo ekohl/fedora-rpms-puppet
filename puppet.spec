@@ -2,7 +2,7 @@
 %global puppet_libdir %{ruby_vendorlibdir}
 
 Name:           puppet
-Version:        6.17.0
+Version:        6.18.0
 Release:        1%{?dist}
 Summary:        Network tool for managing many disparate systems
 License:        ASL 2.0
@@ -195,6 +195,9 @@ useradd -r -u 52 -g puppet -d /usr/local/puppetlabs -s /sbin/nologin \
 
 
 %changelog
+* Sat Sep 26 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 6.18.0-1
+- Update to 6.18.0
+
 * Fri Aug 28 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 6.17.0-1
 - Update to 6.17.0
 - Verify GPG key of the main tarball
