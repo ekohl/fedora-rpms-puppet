@@ -31,6 +31,7 @@ BuildRequires: ruby-devel
 BuildRequires: ruby-facter
 BuildRequires: hiera
 BuildRequires: systemd
+BuildRequires: gnupg2
 Requires: hiera >= 3.3.1
 Requires: facter >= 3.9.6
 Requires: ruby-facter >= 3.9.6
