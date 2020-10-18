@@ -1,6 +1,11 @@
-*~
-*.rpm
-*.tar.gz
-*.tar.gz.asc
-/puppet-*/
-/.build*.log
+/puppet-6.14.0.tar.gz
+/puppetlabs-augeas_core-1.0.4.tar.gz
+/puppetlabs-cron_core-1.0.3.tar.gz
+/puppetlabs-host_core-1.0.2.tar.gz
+/puppetlabs-mount_core-1.0.3.tar.gz
+/puppetlabs-scheduled_task-2.0.1.tar.gz
+/puppetlabs-selinux_core-1.0.4.tar.gz
+/puppetlabs-sshkeys_core-2.0.0.tar.gz
+/puppetlabs-yumrepo_core-1.0.7.tar.gz
+/puppetlabs-zfs_core-1.0.5.tar.gz
+/puppetlabs-zone_core-1.0.3.tar.gz
