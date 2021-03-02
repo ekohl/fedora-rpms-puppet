@@ -31,7 +31,7 @@
 
 Name:           puppet
 Version:        5.5.20
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            http://puppetlabs.com
@@ -390,6 +390,10 @@ fi
 exit 0
 
 %changelog
+* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 5.5.20-4
+- Rebuilt for updated systemd-rpm-macros
+  See https://pagure.io/fesco/issue/2583.
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 5.5.20-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
