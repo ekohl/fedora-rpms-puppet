@@ -78,12 +78,10 @@ find -type f -exec \
 %install
 ruby install.rb --destdir=%{buildroot} \
  --bindir=%{_bindir} \
- --logdir=%{_localstatedir}/log/puppet \
+ --logdir=%{_localstatedir}/log/puppetlabs/puppet \
  --rundir=%{_rundir}/puppet \
  --localedir=%{_datadir}/puppetlabs/puppet/locale \
  --vardir=%{_sharedstatedir}/puppet \
- --configdir=%{_sysconfdir}/puppet \
- --codedir=%{_sysconfdir}/puppet/code \
  --sitelibdir=%{puppet_libdir}
 
 mkdir -p %{buildroot}/usr/share/puppetlabs/puppet/vendor_modules
@@ -127,7 +125,7 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/redhat/*.init
 rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_data.yaml}
 
 %files
-%attr(-, puppet, puppet) %{_localstatedir}/log/puppet
+%attr(-, puppet, puppet) %{_localstatedir}/log/puppetlabs
 %attr(-, puppet, puppet) %{_datadir}/puppetlabs/puppet
 %dir %attr(-, puppet, puppet) %{_datadir}/puppetlabs
 %{_unitdir}/puppet.service
@@ -172,10 +170,12 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %{_mandir}/man8/puppet-node.8*
 %{_mandir}/man8/puppet-parser.8*
 
-%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppet
-%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppet/code
-%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppet/puppet.conf
-%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppet/hiera.yaml
+# Due to the long time without building puppet with a new version, sysconfig and log paths have changed
+%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs
+%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs/puppet
+%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs/code
+%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppetlabs/puppet/puppet.conf
+%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppetlabs/puppet/hiera.yaml
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 
 %ghost %attr(755, puppet, puppet) %{_rundir}/%{name}
@@ -194,7 +194,7 @@ useradd -r -u 52 -g puppet -d /usr/local/puppetlabs -s /sbin/nologin \
 
 %changelog
 * Tue Jun 15 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-1
-- Update to 7.7.0 -- the version that supports ruby 3
+- Update to 7.7.0 - latest version that supports ruby 3.0
 
 * Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 5.5.20-4
 - Rebuilt for updated systemd-rpm-macros
