@@ -171,11 +171,11 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %{_mandir}/man8/puppet-parser.8*
 
 # Due to the long time without building puppet with a new version, sysconfig and log paths have changed
-%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs
-%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs/puppet
-%config(noreplace) %attr(-, puppet, puppet) %dir %{_sysconfdir}/puppetlabs/code
-%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppetlabs/puppet/puppet.conf
-%config(noreplace) %attr(644, puppet, puppet) %{_sysconfdir}/puppetlabs/puppet/hiera.yaml
+%config(noreplace) %attr(-, root, root) %dir %{_sysconfdir}/puppetlabs
+%config(noreplace) %attr(-, root, root) %dir %{_sysconfdir}/puppetlabs/puppet
+%config(noreplace) %attr(-, root, root) %dir %{_sysconfdir}/puppetlabs/code
+%config(noreplace) %attr(644, root, root) %{_sysconfdir}/puppetlabs/puppet/puppet.conf
+%config(noreplace) %attr(644, root, root) %{_sysconfdir}/puppetlabs/puppet/hiera.yaml
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 
 %ghost %attr(755, puppet, puppet) %{_rundir}/%{name}
