@@ -3,7 +3,7 @@
 
 Name:           puppet
 Version:        7.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            https://puppetlabs.com
@@ -95,7 +95,6 @@ install -Dp -m0644 ext/redhat/logrotate %{buildroot}%{_sysconfdir}/logrotate.d/p
 
 %{__install} -d -m0755 %{buildroot}%{_unitdir}
 install -Dp -m0644 ext/systemd/puppet.service %{buildroot}%{_unitdir}/puppet.service
-ln -s %{_unitdir}/puppet.service %{buildroot}%{_unitdir}/puppetagent.service
 
 install -Dpv -m0755 %{SOURCE13} \
  %{buildroot}%{nm_dispatcher_dir}/dispatcher.d/98-%{name}
@@ -129,7 +128,6 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %attr(-, puppet, puppet) %{_datadir}/puppetlabs/puppet
 %dir %attr(-, puppet, puppet) %{_datadir}/puppetlabs
 %{_unitdir}/puppet.service
-%{_unitdir}/puppetagent.service
 %{_tmpfilesdir}/%{name}.conf
 %dir %{nm_dispatcher_dir}
 %dir %{nm_dispatcher_dir}/dispatcher.d
@@ -183,7 +181,7 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %pre
 getent group puppet &>/dev/null || groupadd -r puppet -g 52 &>/dev/null
 getent passwd puppet &>/dev/null || \
-useradd -r -u 52 -g puppet -d /usr/local/puppetlabs -s /sbin/nologin \
+useradd -r -u 52 -g puppet -s /sbin/nologin \
  -c "Puppet" puppet &>/dev/null
 
 %post
@@ -193,6 +191,9 @@ useradd -r -u 52 -g puppet -d /usr/local/puppetlabs -s /sbin/nologin \
 %systemd_postun_with_restart puppet.service
 
 %changelog
+* Mon Jul 05 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-2
+- Cleaning up the spec file, adding suggestions from ekohl (Ewoud Kohl van Wijngaarden)
+
 * Tue Jun 15 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-1
 - Update to 7.7.0 - latest version that supports ruby 3.0
 
