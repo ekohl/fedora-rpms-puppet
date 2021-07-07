@@ -3,10 +3,10 @@
 
 Name:           puppet
 Version:        7.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Network tool for managing many disparate systems
 License:        ASL 2.0
-URL:            https://puppetlabs.com
+URL:            https://puppet.com
 Source0:        https://downloads.puppetlabs.com/puppet/%{name}-%{version}.tar.gz
 Source1:        https://downloads.puppetlabs.com/puppet/%{name}-%{version}.tar.gz.asc
 Source2:        RPM-GPG-KEY-puppet-20250406
@@ -191,6 +191,9 @@ useradd -r -u 52 -g puppet -s /sbin/nologin \
 %systemd_postun_with_restart puppet.service
 
 %changelog
+* Wed Jul 07 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-2
+- Updated puppet url
+
 * Mon Jul 05 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-2
 - Cleaning up the spec file, adding suggestions from ekohl (Ewoud Kohl van Wijngaarden)
 
