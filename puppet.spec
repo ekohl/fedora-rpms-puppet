@@ -3,7 +3,7 @@
 
 Name:           puppet
 Version:        7.7.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            https://puppet.com
@@ -191,6 +191,9 @@ useradd -r -u 52 -g puppet -s /sbin/nologin \
 %systemd_postun_with_restart puppet.service
 
 %changelog
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 7.7.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Wed Jul 07 2021 Breno Brand Fernandes <brandfbb@gmail.com> - 7.7.0-2
 - Updated puppet url
 
