@@ -2,23 +2,25 @@
 %global puppet_libdir %{ruby_vendorlibdir}
 
 Name:           puppet
-Version:        7.7.0
-Release:        4%{?dist}
+Version:        7.9.0
+Release:        1%{?dist}
 Summary:        Network tool for managing many disparate systems
 License:        ASL 2.0
 URL:            https://puppet.com
 Source0:        https://downloads.puppetlabs.com/puppet/%{name}-%{version}.tar.gz
 Source1:        https://downloads.puppetlabs.com/puppet/%{name}-%{version}.tar.gz.asc
 Source2:        RPM-GPG-KEY-puppet-20250406
-Source3:        https://forge.puppet.com/v3/files/puppetlabs-mount_core-1.0.4.tar.gz
-Source4:        https://forge.puppet.com/v3/files/puppetlabs-host_core-1.0.3.tar.gz
-Source5:        https://forge.puppet.com/v3/files/puppetlabs-augeas_core-1.1.1.tar.gz
-Source6:        https://forge.puppet.com/v3/files/puppetlabs-cron_core-1.0.4.tar.gz
-Source7:        https://forge.puppet.com/v3/files/puppetlabs-scheduled_task-2.2.1.tar.gz
-Source8:        https://forge.puppet.com/v3/files/puppetlabs-selinux_core-1.0.4.tar.gz
+# Get these by checking out the right tag from https://github.com/puppetlabs/puppet-agent and:
+# sed 's|.\+puppetlabs/\([a-z_-]\+\).git.\+tags/\([0-9\.]\+\)"}|https://forge.puppet.com/v3/files/\1-\2.tar.gz|' configs/components/module-puppetlabs-*.json
+Source3:        https://forge.puppet.com/v3/files/puppetlabs-augeas_core-1.1.2.tar.gz
+Source4:        https://forge.puppet.com/v3/files/puppetlabs-cron_core-1.0.5.tar.gz
+Source5:        https://forge.puppet.com/v3/files/puppetlabs-host_core-1.0.3.tar.gz
+Source6:        https://forge.puppet.com/v3/files/puppetlabs-mount_core-1.0.4.tar.gz
+Source7:        https://forge.puppet.com/v3/files/puppetlabs-scheduled_task-1.0.0.tar.gz
+Source8:        https://forge.puppet.com/v3/files/puppetlabs-selinux_core-1.1.0.tar.gz
 Source9:        https://forge.puppet.com/v3/files/puppetlabs-sshkeys_core-2.2.0.tar.gz
 Source10:       https://forge.puppet.com/v3/files/puppetlabs-yumrepo_core-1.0.7.tar.gz
-Source11:       https://forge.puppet.com/v3/files/puppetlabs-zfs_core-1.1.0.tar.gz
+Source11:       https://forge.puppet.com/v3/files/puppetlabs-zfs_core-1.2.0.tar.gz
 Source12:       https://forge.puppet.com/v3/files/puppetlabs-zone_core-1.0.3.tar.gz
 Source13:       puppet-nm-dispatcher.systemd
 Source14:       start-puppet-wrapper
@@ -35,18 +37,16 @@ BuildRequires: systemd
 BuildRequires: gnupg2
 Requires: hiera >= 3.3.1
 Requires: facter >= 3.9.6
-Requires: ruby-facter >= 3.9.6
-Requires: rubygem-semantic_puppet >= 1.0.2
-Requires: rubygem-puppet-resource_api
-Requires: rubygem-deep_merge
-Requires: rubygem-httpclient
-Requires: rubygem-multi_json
-Requires: rubygem-json
+Requires: rubygem(concurrent-ruby) >= 1.0.5
+Requires: rubygem(deep_merge) >= 1.0
+Requires: rubygem(facter) >= 3.9.6
+Requires: rubygem(multi_json) >= 1.10
+Requires: rubygem(puppet-resource_api) >= 1.5
+Requires: rubygem(semantic_puppet) >= 1.0.2
 Requires: ruby-augeas >= 0.5.0
 Requires: augeas >= 1.10.1
 Requires: augeas-libs >= 1.10.1
 Requires: cpp-hocon >= 0.2.1
-Requires: rubygem-concurrent-ruby >= 1.0.5
 Requires: ruby(selinux) libselinux-utils
 Obsoletes: puppet-headless < 6.0.0
 Obsoletes: puppet-server < 6.0.0
@@ -70,6 +70,7 @@ find -type f -exec \
   sed -i \
     -e 's|/opt/puppetlabs/puppet/bin|%{_bindir}|' \
     -e 's|/opt/puppetlabs/puppet/cache|%{_sharedstatedir}/puppet|' \
+    -e 's|/opt/puppetlabs/puppet/public|%{_sharedstatedir}/puppet/public|' \
     -e 's|/opt/puppetlabs/puppet/share/locale|%{_datadir}/puppetlabs/puppet/locale|' \
     -e 's|/opt/puppetlabs/puppet/modules|%{_datadir}/puppetlabs/puppet/modules|' \
     -e 's|/opt/puppetlabs/puppet/vendor_modules|%{_datadir}/puppetlabs/puppet/vendor_modules|' \
@@ -82,6 +83,7 @@ ruby install.rb --destdir=%{buildroot} \
  --rundir=%{_rundir}/puppet \
  --localedir=%{_datadir}/puppetlabs/puppet/locale \
  --vardir=%{_sharedstatedir}/puppet \
+ --publicdir=%{_sharedstatedir}/puppet/public \
  --sitelibdir=%{puppet_libdir}
 
 mkdir -p %{buildroot}/usr/share/puppetlabs/puppet/vendor_modules
@@ -132,7 +134,6 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %dir %{nm_dispatcher_dir}
 %dir %{nm_dispatcher_dir}/dispatcher.d
 %{nm_dispatcher_dir}/dispatcher.d/98-puppet
-%{_bindir}/start-puppet-agent
 
 %doc README.md examples
 %license LICENSE
@@ -143,7 +144,9 @@ rm %{buildroot}%{_datadir}/puppetlabs/puppet/ext/{build_defaults.yaml,project_da
 %{_datadir}/ruby/vendor_ruby/puppet.rb
 %{_datadir}/ruby/vendor_ruby/puppet_x.rb
 %{_sharedstatedir}/puppet
+%{_sharedstatedir}/puppet/public
 %{_bindir}/puppet
+%{_bindir}/start-puppet-agent
 %{_mandir}/man5/puppet.conf.5*
 %{_mandir}/man8/puppet-plugin.8*
 %{_mandir}/man8/puppet-report.8*
@@ -191,6 +194,10 @@ useradd -r -u 52 -g puppet -s /sbin/nologin \
 %systemd_postun_with_restart puppet.service
 
 %changelog
+* Tue Aug 17 2021 Ewoud Kohl van Wijngaarden <ewoud+fedora@kohlvanwijngaarden.nl> - 7.9.0-1
+- Update to 7.9.0
+- Fix publicdir path
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 7.7.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
