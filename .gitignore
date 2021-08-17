@@ -4,3 +4,4 @@
 *.tar.gz.asc
 /puppet-*/
 /.build*.log
+results_puppet/
